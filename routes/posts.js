@@ -14,41 +14,6 @@ router.post("/", async (req, res) => {
   }
 });
 
-//UPDATE POST
-// router.put("/:id", async (req, res) => {
-//   try {
-//     const post = await Post.findById(req.params.id);
-//     try {
-//       const updatedPost = await post.updateOne({}, { done: "done" });
-//       res.status(200).json(updatedPost);
-//     } catch (error) {
-//       res.status(500).json(error);
-//     }
-//   } catch (error) {
-//     res.status(500).json(error);
-//   }
-// });
-// router.put("/update/:id", function (req, res) {
-//   let id = req.params.id;
-//   ChoiceModel.findOne({ _id: id }, function (err, foundObject) {
-//     if (err) {
-//       console.log(err);
-//       res.status(500).json();
-//     } else {
-//       if (!foundObject) {
-//         res.status(404).json();
-//       } else {
-//         if (req.body.done) {
-//           foundObject.done = req.body.done;
-//         }
-//         foundObject.save(function (err, updatedObject) {
-//           res.send(updatedObject);
-//         });
-//       }
-//     }
-//   });
-// });
-
 router.put("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -114,17 +79,10 @@ router.get("/:id", async (req, res) => {
 //GET ALL POSTS
 router.get("/", async (req, res) => {
   const username = req.query.user;
-  const catName = req.query.cat;
   try {
     let posts;
     if (username) {
       posts = await Post.find({ username });
-    } else if (catName) {
-      posts = await Post.find({
-        categories: {
-          $in: [catName],
-        },
-      });
     } else {
       posts = await Post.find();
     }
